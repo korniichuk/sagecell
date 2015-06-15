@@ -6,5 +6,5 @@
 *.zip
 .pypirc
 fabfile.py
-/dist/*
 /*.egg-info/*
+/dist/*

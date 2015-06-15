@@ -158,7 +158,7 @@ def main():
 
     create_dictionaries()
     args = parse_command_line_args()
-    args.function_name(args)
+    args.function_name()
 
 def parse_command_line_args():
     """Parse command line arguments"""
