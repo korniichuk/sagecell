@@ -1,0 +1,4 @@
+_ask_internet
+Do you have stable Internet access? [y/n]
+_error_Internet
+Error: You can not install the Sage Cell Server without stable Internet access

@@ -1,0 +1,8 @@
+*~
+*.gz
+*.pyc
+*.tar
+*.tgz
+*.zip
+/dist/*
+/rk.egg-info/*
