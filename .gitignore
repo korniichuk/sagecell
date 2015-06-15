@@ -4,5 +4,7 @@
 *.tar
 *.tgz
 *.zip
+.pypirc
+fabfile.py
 /dist/*
-/rk.egg-info/*
+/sagecell.egg-info/*
