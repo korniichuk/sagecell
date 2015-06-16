@@ -210,6 +210,8 @@ def show():
 def ssh():
     """Setup SSH for auto login to localhost without a password"""
 
+    # Install  openssh-server
+    local("sudo apt-get install openssh-server")
     # Create a public and a private keys using the ssh-keygen command
     local("ssh-keygen -t rsa -b 4096 -N '' -f ~/.ssh/id_rsa")
     # Copy a public key using the ssh-copy-id command
