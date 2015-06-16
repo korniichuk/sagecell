@@ -9,7 +9,7 @@ from sys import argv, exit
 from configobj import ConfigObj
 
 try:
-    from fabric.api import local
+    from fabric.api import local, settings
 except ImportError:
     print("Error: No module named 'fabric'. You can install it by typing:\n"
           "sudo pip install fabric")
@@ -53,15 +53,17 @@ def install():
     try:
         git_version = check_output("git --version", shell=True)
     except CalledProcessError:
-        local("sudo apt-get update")
-        local("sudo apt-get install git")
+        with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
+            local("sudo apt-get update")
+            local("sudo apt-get install git")
         git_version = check_output("git --version", shell=True)
     git_version = git_version.replace("git version ", "").replace("\n", "")
     git_version_float = float(git_version[:3])
     if git_version_float < 1.8:
         # Update git
-        local("sudo apt-get update")
-        local("sudo apt-get install git")
+        with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
+            local("sudo apt-get update")
+            local("sudo apt-get install git")
     # /Check git version
     # Check pip/
     try:
@@ -74,7 +76,8 @@ def install():
         remove(join(downloads_path, "get-pip.py"))
     # /Check pip
     # Install npm
-    local("sudo apt-get install npm")
+    with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
+        local("sudo apt-get install npm")
     # Make an alias (-g -- globally)
     local("sudo ln -s /usr/bin/nodejs /usr/bin/node")
     local("sudo npm install -g inherits requirejs coffee-script")
@@ -93,7 +96,8 @@ def install():
     # Move sage folder
     local("mv %s %s" % (join(sc_build_path, "github/sage"), sc_build_path))
     # Install Sage dependencies
-    local("sudo apt-get install gcc m4 make perl tar")
+    with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
+        local("sudo apt-get install gcc m4 make perl tar")
     # Build Sage
     sage_path = join(sc_build_path, "sage")
     local("cd %s; make start" % sage_path)
@@ -143,7 +147,8 @@ def install():
     # /Change config.py file
     # /Configuration
     # Install python-dev for psutil installation
-    local("sudo apt-get install python-dev")
+    with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
+        local("sudo apt-get install python-dev")
     # Install psutil, SQLAlchemy
     local("sudo pip install psutil SQLAlchemy")
     # Install IPython Notebook
@@ -211,7 +216,8 @@ def ssh():
     """Setup SSH for auto login to localhost without a password"""
 
     # Install  openssh-server
-    local("sudo apt-get install openssh-server")
+    with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
+        local("sudo apt-get install openssh-server")
     # Create a public and a private keys using the ssh-keygen command
     local("ssh-keygen -t rsa -b 4096 -N '' -f ~/.ssh/id_rsa")
     # Copy a public key using the ssh-copy-id command
