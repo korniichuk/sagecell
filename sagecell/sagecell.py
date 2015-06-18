@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from argparse import ArgumentParser
-from os import remove
-from os.path import dirname, exists, expanduser, isfile, join
+from os import remove, rmdir
+from os.path import dirname, exists, expanduser, isdir, isfile, join
 from subprocess import check_output, CalledProcessError
 from sys import argv, exit
 
@@ -115,6 +115,10 @@ def install():
     matplotlib_path = join(sc_build_path, "github/matplotlib")
     local("mv %s %s" % (matplotlib_path, sage_path))
     local("cd %s; ../sage setup.py install" % join(sage_path, "matplotlib"))
+    # Delete empty github dir
+    github_path = join(sc_build_path, "github")
+    if exists(github_path) and isdir(github_path):
+        rmdir(github_path)
     # Install ecdsa, lockfile, paramiko, sockjs-tornado
     local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
           "ecdsa" % sage_path)
