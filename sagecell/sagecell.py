@@ -132,28 +132,20 @@ def install():
     local("cd %s; cp config_default.py config.py" % join(sage_path,
                                                          "sagecell"))
     # Check psutil
-    psutil_dest_path = expanduser("~/sc_build/sage/local/lib/python2.7/psutil")
-    if not exists(psutil_dest_path):
-        psutil_source_path = "/usr/local/lib/python2.7/dist-packages/psutil"
-        if not exists(psutil_source_path):
-            # Install python-dev for psutil installation
-            local("echo \"Y\" | sudo apt-get install python-dev")
-            # Install psutil
-            local("sudo pip install psutil")
-        # Copy psutil
-        local("cp --recursive %s %s" % (psutil_source_path, psutil_dest_path))
+    psutil_path = expanduser("~/sc_build/sage/local/lib/python2.7/psutil")
+    if not exists(psutil_path):
+        # Install python-dev for psutil installation
+        local("echo \"Y\" | sudo apt-get install python-dev")
+        # Install psutil
+        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+              "psutil" % sage_path)
     # Check SQLAlchemy
-    sqlalchemy_dest_path = expanduser("~/sc_build/sage/local/lib/python2.7/"
-                                      "sqlalchemy")
-    if not exists(sqlalchemy_dest_path):
-        sqlalchemy_source_path = ("/usr/local/lib/python2.7/dist-packages/"
-                                  "sqlalchemy")
-        if not exists(sqlalchemy_source_path):
-            # Install SQLAlchemy
-            local("sudo pip install SQLAlchemy")
-        # Copy SQLAlchemy
-        local("cp --recursive %s %s" % (sqlalchemy_source_path,
-                                        sqlalchemy_dest_path))
+    sqlalchemy_path = expanduser("~/sc_build/sage/local/lib/python2.7/"
+                                 "sqlalchemy")
+    if not exists(sqlalchemy_path):
+        # Install SQLAlchemy
+        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+              "SQLAlchemy" % sage_path)
 
 def main():
     """Main function"""
