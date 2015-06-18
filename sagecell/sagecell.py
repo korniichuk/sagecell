@@ -91,7 +91,8 @@ def install():
     local("cd %s; ./clone_repositories" % sc_build_path)
     # /Download repositories from GitHub
     # Move sage folder
-    local("mv %s %s" % (join(sc_build_path, "github/sage"), sc_build_path))
+    sage_path_old = join(sc_build_path, "github/sage")
+    local("mv %s %s" % (sage_path_old, sc_build_path))
     # Install Sage dependencies
     local("echo \"Y\" | sudo apt-get install gcc m4 make perl tar")
     # Build Sage
@@ -109,10 +110,6 @@ def install():
     matplotlib_path = join(sc_build_path, "github/matplotlib")
     local("mv %s %s" % (matplotlib_path, sage_path))
     local("cd %s; ../sage setup.py install" % join(sage_path, "matplotlib"))
-    # Delete empty github dir
-    github_path = join(sc_build_path, "github")
-    if exists(github_path) and isdir(github_path):
-        rmdir(github_path)
     # Install ecdsa, lockfile, paramiko, sockjs-tornado
     local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
           "ecdsa" % sage_path)
@@ -122,9 +119,14 @@ def install():
           "paramiko" % sage_path)
     local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
           "sockjs-tornado" % sage_path)
-    # Build SageMathCell
+    # Move sagecell folder
     sagecell_path_old = join(sc_build_path, "github/sagecell")
     local("mv %s %s" % (sagecell_path_old, sage_path))
+    # Delete empty github dir
+    github_path = join(sc_build_path, "github")
+    if exists(github_path) and isdir(github_path):
+        rmdir(github_path)
+    # Build SageMathCell
     local("cd %s; ../sage -sh -c \"make -B\"" % join(sage_path, "sagecell"))
     # Configuration
     local("cd %s; cp config_default.py config.py" % join(sage_path,
