@@ -49,12 +49,13 @@ def install():
             (answer_lower == 'nix')):
         print(messages["_error_Internet"])
         exit(0)
+    # Update the Package Index
+    local("sudo apt-get update")
     # Check git version
     try:
         git_version = check_output("git --version", shell=True)
     except CalledProcessError:
-        with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
-            local("sudo apt-get update")
+        with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):            
             local("sudo apt-get install git")
         git_version = check_output("git --version", shell=True)
     git_version = git_version.replace("git version ", "").replace("\n", "")
@@ -62,7 +63,6 @@ def install():
     if git_version_float < 1.8:
         # Update git
         with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
-            local("sudo apt-get update")
             local("sudo apt-get install git")
     # Check pip
     try:
@@ -77,7 +77,6 @@ def install():
             remove(pip_path)
     # Install npm
     with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
-        local("sudo apt-get update")
         local("sudo apt-get install npm")
     # Make an alias (-g -- globally)
     local("sudo ln -s /usr/bin/nodejs /usr/bin/node")
@@ -98,7 +97,6 @@ def install():
     local("mv %s %s" % (join(sc_build_path, "github/sage"), sc_build_path))
     # Install Sage dependencies
     with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
-        local("sudo apt-get update")
         local("sudo apt-get install gcc m4 make perl tar")
     # Build Sage
     sage_path = join(sc_build_path, "sage")
@@ -141,7 +139,6 @@ def install():
         psutil_source_path = "/usr/local/lib/python2.7/dist-packages/psutil"
         if not exists(psutil_source_path):
             with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
-                local("sudo apt-get update")
                 # Install python-dev for psutil installation
                 local("sudo apt-get install python-dev")
             # Install psutil
@@ -210,9 +207,10 @@ def open_sagemathcell():
 def ssh():
     """Setup SSH for auto login to localhost without a password"""
 
+    # Update the Package Index
+    local("sudo apt-get update")
     # Install openssh-server
     with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
-        local("sudo apt-get update")
         local("sudo apt-get install openssh-server")
     # Create a public and a private keys using the ssh-keygen command
     local("ssh-keygen -t rsa -b 4096 -N '' -f ~/.ssh/id_rsa")
