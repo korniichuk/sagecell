@@ -4,9 +4,9 @@ _subparsers
 subcommands
 _parser_install
 install The Sage Cell Server
-_parser_run
-run the Sage Cell Server
-_parser_show
-open browser with the Sage Cell Server
+_parser_open
+open browser with the SageMathCell
 _parser_ssh
 setup SSH for auto login to localhost without a password
+_parser_start
+start The Sage Cell Server
