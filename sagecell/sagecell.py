@@ -9,7 +9,7 @@ from sys import argv, exit
 from configobj import ConfigObj
 
 try:
-    from fabric.api import local, settings
+    from fabric.api import local
 except ImportError:
     print("Error: No module named 'fabric'. You can install it by typing:\n"
           "sudo pip install fabric")
@@ -55,15 +55,13 @@ def install():
     try:
         git_version = check_output("git --version", shell=True)
     except CalledProcessError:
-        with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):            
-            local("sudo apt-get install git")
+        local("echo \"Y\" | sudo apt-get install git")
         git_version = check_output("git --version", shell=True)
     git_version = git_version.replace("git version ", "").replace("\n", "")
     git_version_float = float(git_version[:3])
     if git_version_float < 1.8:
         # Update git
-        with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
-            local("sudo apt-get install git")
+        local("echo \"Y\" | sudo apt-get install git")
     # Check pip
     try:
         pip_version = check_output("pip -V", shell=True)
@@ -76,8 +74,7 @@ def install():
         if exists(pip_path) and isfile(pip_path):
             remove(pip_path)
     # Install npm
-    with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
-        local("sudo apt-get install npm")
+    local("echo \"Y\" | sudo apt-get install npm")
     # Make an alias (-g -- globally)
     local("sudo ln -s /usr/bin/nodejs /usr/bin/node")
     local("sudo npm install -g inherits requirejs coffee-script")
@@ -96,8 +93,7 @@ def install():
     # Move sage folder
     local("mv %s %s" % (join(sc_build_path, "github/sage"), sc_build_path))
     # Install Sage dependencies
-    with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
-        local("sudo apt-get install gcc m4 make perl tar")
+    local("echo \"Y\" | sudo apt-get install gcc m4 make perl tar")
     # Build Sage
     sage_path = join(sc_build_path, "sage")
     local("cd %s; make start" % sage_path)
@@ -138,9 +134,8 @@ def install():
     if not exists(psutil_dest_path):
         psutil_source_path = "/usr/local/lib/python2.7/dist-packages/psutil"
         if not exists(psutil_source_path):
-            with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
-                # Install python-dev for psutil installation
-                local("sudo apt-get install python-dev")
+            # Install python-dev for psutil installation
+            local("echo \"Y\" | sudo apt-get install python-dev")
             # Install psutil
             local("sudo pip install psutil")
         # Copy psutil
@@ -210,8 +205,7 @@ def ssh():
     # Update the Package Index
     local("sudo apt-get update")
     # Install openssh-server
-    with settings(prompts={'Do you want to continue [Y/n]? ': 'Y'}):
-        local("sudo apt-get install openssh-server")
+    local("echo \"Y\" | sudo apt-get install openssh-server")
     # Create a public and a private keys using the ssh-keygen command
     local("ssh-keygen -t rsa -b 4096 -N '' -f ~/.ssh/id_rsa")
     # Copy a public key using the ssh-copy-id command
