@@ -65,7 +65,7 @@ Quickstart
 
     $ sagecell open
 
-This command open browser with the SageMathCell.
+This command open browser with the Sage Cell Server.
 
 Express
 -------
@@ -124,11 +124,14 @@ Start the Sage Cell Server
 
     $ sagecell start
 
-Open browser with the SageMathCell
-----------------------------------
+Open browser with the Sage Cell Server
+--------------------------------------
 ::
 
     $ sagecell open
+
+.. image:: ./img/user_guide-_open_browser_with_the_sage_cell_server_0001_728px.png
+  :alt: user guide: open browser with the sage cell server [prtscn]
 
 Setup SSH for auto login to localhost without a password
 --------------------------------------------------------
