@@ -1,6 +1,10 @@
 .. contents:: Table of contents
    :depth: 2
 
+Introduction
+============
+Yep, you can use this `NOT simple installation <https://github.com/sagemath/sagecell#simple-installation>`_. Oops, does not work. Use the Sage Cell Server installer, because it is just easier :).
+
 Installation
 ============
 Install the sagecell from PyPI
