@@ -141,7 +141,7 @@ def install():
             # Install psutil
             local("sudo pip install psutil")
         # Copy psutil
-        local("cp %s %s" % (psutil_source_path, psutil_dest_path))
+        local("cp --recursive %s %s" % (psutil_source_path, psutil_dest_path))
     # Check SQLAlchemy
     sqlalchemy_dest_path = expanduser("~/sc_build/sage/local/lib/python2.7/"
                                       "sqlalchemy")
@@ -152,7 +152,8 @@ def install():
             # Install SQLAlchemy
             local("sudo pip install SQLAlchemy")
         # Copy SQLAlchemy
-        local("cp %s %s" % (sqlalchemy_source_path, sqlalchemy_dest_path))
+        local("cp --recursive %s %s" % (sqlalchemy_source_path,
+                                        sqlalchemy_dest_path))
 
 def main():
     """Main function"""
