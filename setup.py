@@ -7,7 +7,7 @@ setup(
     author = "Ruslan Korniichuk",
     author_email = "ruslan.korniichuk@gmail.com",
     classifiers = [
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "Intended Audience :: Science/Research",
@@ -39,6 +39,6 @@ setup(
     packages = ["sagecell"],
     platforms = ["Linux"],
     url = "https://github.com/korniichuk/sagecell",
-    version = "0.1a1",
+    version = "0.1b1",
     zip_safe = True
 )
