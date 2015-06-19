@@ -2,3 +2,7 @@ _ask_internet
 Do you have stable Internet access? [y/n]
 _error_Internet
 Error: You can not install the Sage Cell Server without stable Internet access
+_installed
+Successfully installed the Sage Cell Server
+_shut_down
+Shut down the Sage Cell Server: Ctrl+c

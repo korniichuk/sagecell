@@ -146,6 +146,7 @@ def install():
         # Install SQLAlchemy
         local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
               "SQLAlchemy" % sage_path)
+    print(messages["_installed"])
 
 def main():
     """Main function"""
@@ -214,5 +215,5 @@ def start():
     """Start the Sage Cell Server"""
 
     sagecell_path = expanduser("~/sc_build/sage/sagecell")
-    print("Shut down the Sage Cell Server: Ctrl+c")
+    print(messages["_shut_down"])
     local("cd %s; ../sage web_server.py" % sagecell_path)
