@@ -75,8 +75,11 @@ def install():
             remove(pip_path)
     # Install npm
     local("echo \"Y\" | sudo apt-get install npm")
-    # Make an alias (-g -- globally)
-    local("sudo ln -s /usr/bin/nodejs /usr/bin/node")
+    # Make an alias 
+    nodejs_alias_abs_path = "/usr/bin/node"
+    if not exists(nodejs_alias_abs_path):
+        local("sudo ln -s /usr/bin/nodejs %s" % nodejs_alias_abs_path)
+    # Install js: inherits, requirejs, coffee-script (-g -- globally)
     local("sudo npm install -g inherits requirejs coffee-script")
     # Download repositories from GitHub/
     # Create a directory for building images
