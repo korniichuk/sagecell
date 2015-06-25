@@ -218,5 +218,4 @@ def start():
     """Start the Sage Cell Server"""
 
     sagecell_path = expanduser("~/sc_build/sage/sagecell")
-    print(messages["_shut_down"])
     local("cd %s; ../sage web_server.py" % sagecell_path)
