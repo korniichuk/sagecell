@@ -3,6 +3,7 @@
 from argparse import ArgumentParser
 from os import remove, rmdir
 from os.path import dirname, exists, expanduser, isdir, isfile, join
+from platform import platform
 from subprocess import check_output, CalledProcessError
 from sys import argv, exit
 
@@ -21,6 +22,19 @@ config = ConfigObj(config_sagecell_abs_path)
 
 argparse = {} # Strings for -h --help
 messages = {} # Strings for output
+
+def check_platform():
+    """Check linux distro"""
+
+    distro = None
+
+    platform_str = platform()
+    platform_str_lower = platform_str.lower()
+    if "ubuntu" in platform_str_lower:
+        distro = "ubuntu"
+    elif "debian" in platform_str_lower:
+        distro = "debian"
+    return distro
 
 def create_dictionaries():
     """Create "argparse" and "messages" dictionaries"""
