@@ -12,7 +12,7 @@ try:
     from fabric.api import local
 except ImportError:
     print("Error: No module named 'fabric'. You can install it by typing:\n"
-          "sudo pip install fabric")
+          "    sudo pip install fabric\nor\n    su -c \"pip install fabric\"")
     exit(1)
 
 module_location = dirname(__file__)
