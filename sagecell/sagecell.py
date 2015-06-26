@@ -57,6 +57,7 @@ def install():
 
     # Check distro:
     distro = check_distro()
+    distro = None
     if distro == None:
         print(messages["_unsupported_distro"])
         print(messages["_ask_distro"].format("\n"))
@@ -80,37 +81,62 @@ def install():
         print(messages["_error_Internet"])
         exit(0)
     # Update the Package Index
-    local("sudo apt-get update")
+    if distro == "ubuntu":
+        local("sudo apt-get update")
+    elif distro == "debian":
+        local("su -c \"apt-get update\"")
     # Check git version
     try:
         git_version = check_output("git --version", shell=True)
     except CalledProcessError:
-        local("echo \"Y\" | sudo apt-get install git")
+        # Install git
+        if distro == "ubuntu":
+            local("echo \"Y\" | sudo apt-get install git")
+        elif distro == "debian":
+            local("su -c \"echo \"Y\" | apt-get install git\"")
         git_version = check_output("git --version", shell=True)
     git_version = git_version.replace("git version ", "").replace("\n", "")
     git_version_float = float(git_version[:3])
     if git_version_float < 1.8:
         # Update git
-        local("echo \"Y\" | sudo apt-get install git")
+        if distro == "ubuntu":
+            local("echo \"Y\" | sudo apt-get install git")
+        elif distro == "debian":
+            local("su -c \"echo \"Y\" | apt-get install git\"")
     # Check pip
     try:
         pip_version = check_output("pip -V", shell=True)
     except CalledProcessError:
-        downloads_path = expanduser("~/Downloads")
-        local("cd %s; wget https://bootstrap.pypa.io/get-pip.py" %
-                downloads_path)
-        local("cd %s; sudo python get-pip.py" % downloads_path)
-        pip_path = join(downloads_path, "get-pip.py")
-        if exists(pip_path) and isfile(pip_path):
-            remove(pip_path)
+        # Install pip
+        if distro == "ubuntu":
+            downloads_path = expanduser("~/Downloads")
+            local("cd %s; wget https://bootstrap.pypa.io/get-pip.py" %
+                    downloads_path)
+            local("cd %s; sudo python get-pip.py" % downloads_path)
+            pip_path = join(downloads_path, "get-pip.py")
+            if exists(pip_path) and isfile(pip_path):
+                remove(pip_path)
+        elif distro == "debian":
+            # Install python-dev for pip installation
+            local("su -c \"echo \"Y\" | apt-get install python-dev\"")
+            local("su -c \"echo \"Y\" | apt-get install python-pip\"")
     # Install npm
-    local("echo \"Y\" | sudo apt-get install npm")
-    # Make an alias 
+    if distro == "ubuntu":
+        local("echo \"Y\" | sudo apt-get install npm")
+    elif distro == "debian":
+        local("su -c \"echo \"Y\" | apt-get install npm\"")
+    # Make an alias
     nodejs_alias_abs_path = "/usr/bin/node"
     if not exists(nodejs_alias_abs_path):
-        local("sudo ln -s /usr/bin/nodejs %s" % nodejs_alias_abs_path)
+        if distro == "ubuntu":
+            local("sudo ln -s /usr/bin/nodejs %s" % nodejs_alias_abs_path)
+        elif distro == "debian":
+            local("su -c \"ln -s /usr/bin/nodejs %s\"" % nodejs_alias_abs_path)
     # Install js: inherits, requirejs, coffee-script (-g -- globally)
-    local("sudo npm install -g inherits requirejs coffee-script")
+    if distro == "ubuntu":
+        local("sudo npm install -g inherits requirejs coffee-script")
+    elif distro == "debian":
+        local("su -c \"npm install -g inherits requirejs coffee-script\"")
     # Download repositories from GitHub/
     # Create a directory for building images
     sc_build_path = expanduser("~/sc_build")
@@ -127,7 +153,10 @@ def install():
     sage_path_old = join(sc_build_path, "github/sage")
     local("mv %s %s" % (sage_path_old, sc_build_path))
     # Install Sage dependencies
-    local("echo \"Y\" | sudo apt-get install gcc m4 make perl tar")
+    if distro == "ubuntu":
+        local("echo \"Y\" | sudo apt-get install gcc m4 make perl tar")
+    elif distro == "debian":
+        local("su -c \"echo \"Y\" | apt-get install gcc m4 make perl tar\"")
     # Build Sage
     sage_path = join(sc_build_path, "sage")
     local("cd %s; make start" % sage_path)
@@ -144,14 +173,24 @@ def install():
     local("mv %s %s" % (matplotlib_path, sage_path))
     local("cd %s; ../sage setup.py install" % join(sage_path, "matplotlib"))
     # Install ecdsa, lockfile, paramiko, sockjs-tornado
-    local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
-          "ecdsa" % sage_path)
-    local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
-          "lockfile" % sage_path)
-    local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
-          "paramiko" % sage_path)
-    local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
-          "sockjs-tornado" % sage_path)
+    if distro == "ubuntu":
+        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+              "ecdsa" % sage_path)
+        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+              "lockfile" % sage_path)
+        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+              "paramiko" % sage_path)
+        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+              "sockjs-tornado" % sage_path)
+    elif distro == "debian":
+        local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+              "--no-deps --upgrade ecdsa\"" % sage_path)
+        local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+              "--no-deps --upgrade lockfile\"" % sage_path)
+        local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+              "--no-deps --upgrade paramiko\"" % sage_path)
+        local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+              "--no-deps --upgrade sockjs-tornado\"" % sage_path)
     # Move sagecell folder
     sagecell_path_old = join(sc_build_path, "github/sagecell")
     local("mv %s %s" % (sagecell_path_old, sage_path))
@@ -168,17 +207,28 @@ def install():
     psutil_path = expanduser("~/sc_build/sage/local/lib/python2.7/psutil")
     if not exists(psutil_path):
         # Install python-dev for psutil installation
-        local("echo \"Y\" | sudo apt-get install python-dev")
+        if distro == "ubuntu":
+            local("echo \"Y\" | sudo apt-get install python-dev")
+        elif distro == "debian":
+            local("su -c \"echo \"Y\" | apt-get install python-dev\"")
         # Install psutil
-        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
-              "psutil" % sage_path)
+        if distro == "ubuntu":
+            local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+                  "psutil" % sage_path)
+        elif distro == "debian":
+            local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+                  "--no-deps --upgrade psutil\"" % sage_path)
     # Check SQLAlchemy
     sqlalchemy_path = expanduser("~/sc_build/sage/local/lib/python2.7/"
                                  "sqlalchemy")
     if not exists(sqlalchemy_path):
         # Install SQLAlchemy
-        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
-              "SQLAlchemy" % sage_path)
+        if distro == "ubuntu":
+            local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+                  "SQLAlchemy" % sage_path)
+        elif distro == "debian":
+            local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+                  "--no-deps --upgrade SQLAlchemy\"" % sage_path)
     print(messages["_installed"])
 
 def main():
