@@ -23,7 +23,7 @@ config = ConfigObj(config_sagecell_abs_path)
 argparse = {} # Strings for -h --help
 messages = {} # Strings for output
 
-def check_platform():
+def check_distro():
     """Check linux distro"""
 
     distro = None
