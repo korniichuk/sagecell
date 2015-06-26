@@ -57,7 +57,6 @@ def install():
 
     # Check distro:
     distro = check_distro()
-    distro = None
     if distro == None:
         print(messages["_unsupported_distro"])
         print(messages["_ask_distro"].format("\n"))
