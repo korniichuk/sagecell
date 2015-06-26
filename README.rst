@@ -5,6 +5,10 @@ Introduction
 ============
 Yep, you can use this `NOT simple installation <https://github.com/sagemath/sagecell#simple-installation>`_. Oops, does not work. Use the Sage Cell Server installer, because it is just easier :).
 
+Portability
+===========
+The Sage Cell Server installer tested on **Ubuntu 14.04.2 LTS**, **Ubuntu 15.04** and **Debian 7.8**.
+
 Installation
 ============
 Install the sagecell from PyPI
