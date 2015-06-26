@@ -23,7 +23,7 @@ setup(
         "Topic :: Utilities"
     ],
     description = ("The Sage Cell Server installer"),
-    download_url = "https://github.com/korniichuk/sagecell/archive/0.1.zip",
+    download_url = "https://github.com/korniichuk/sagecell/archive/0.2.zip",
     entry_points = {
         'console_scripts': 'sagecell = sagecell.sagecell:main'
     },
