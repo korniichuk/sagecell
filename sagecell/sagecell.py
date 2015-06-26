@@ -123,7 +123,13 @@ def install():
     if distro == "ubuntu":
         local("echo \"Y\" | sudo apt-get install npm")
     elif distro == "debian":
-        local("su -c \"echo \"Y\" | apt-get install npm\"")
+        # Install curl for node.js, npm installations
+        local("su -c \"echo \"Y\" | apt-get install curl\"")
+        # Install node.js for npm installation
+        local("su -c \"curl --silent --location "
+              "https://deb.nodesource.com/setup_0.12 | bash -\"")
+        local("su -c \"echo \"Y\" | apt-get install --yes nodejs\"")
+        local("su -c \"curl https://www.npmjs.com/install.sh | sh\"")
     # Make an alias
     nodejs_alias_abs_path = "/usr/bin/node"
     if not exists(nodejs_alias_abs_path):
