@@ -55,6 +55,22 @@ def create_dictionaries():
 def install():
     """Install the Sage Cell Server"""
 
+    # Check distro:
+    distro = check_distro()
+    if distro == None:
+        print(messages["_unsupported_distro"])
+        print(messages["_ask_distro"].format("\n"))
+        answer = raw_input()
+        answer_lower = answer.lower()
+        if (answer_lower == '0') or (answer_lower == 'o'):
+            exit(0)
+        elif answer_lower == '1':
+            distro = "ubuntu"
+        elif answer_lower == '2':
+            distro = "debian"
+        else:
+            print(messages["_error_UnknownValue"])
+            exit(0)
     # Check Internet access
     print(messages["_ask_internet"])
     answer = raw_input()

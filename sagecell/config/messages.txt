@@ -1,6 +1,12 @@
+_ask_distro
+Enter:{0}    0 -- Exit{0}    1 -- Ubuntu linux distro installation{0}    2 -- Debian linux distro installation
 _ask_internet
 Do you have stable Internet access? [y/n]
 _error_Internet
 Error: You can not install the Sage Cell Server without stable Internet access
+_error_UnknownValue
+Error: Unknown value
 _installed
 successfully installed the Sage Cell Server
+_unsupported_distro
+The Sage Cell Server installer does not support your platform.
