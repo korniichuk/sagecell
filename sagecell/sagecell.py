@@ -282,9 +282,19 @@ def ssh():
     """Setup SSH for auto login to localhost without a password"""
 
     # Update the Package Index
-    local("sudo apt-get update")
+    try:
+        # Ubuntu linux distro
+        local("sudo apt-get update")
+    except:
+        # Debian linux distro
+        local("su -c \"apt-get update\"")
     # Install openssh-server
-    local("echo \"Y\" | sudo apt-get install openssh-server")
+    try:
+        # Ubuntu linux distro
+        local("echo \"Y\" | sudo apt-get install openssh-server")
+    except:
+        # Debian linux distro
+        local("su -c \"echo \"Y\" | apt-get install openssh-server\"")
     # Create a public and a private keys using the ssh-keygen command
     local("ssh-keygen -t rsa -b 4096 -N '' -f ~/.ssh/id_rsa")
     # Copy a public key using the ssh-copy-id command
