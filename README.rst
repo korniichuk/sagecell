@@ -150,6 +150,16 @@ If you are familiar with `ssh-keygen <http://www.openbsd.org/cgi-bin/man.cgi?que
     $ eval "$(ssh-agent -s)"
     $ ssh-add ~/.ssh/id_rsa
 
+Transfer a short temporary links
+--------------------------------
+Replace the ``~/sc_build/sage/sagecell/sqlite.db`` file with a `shortened temporary links <http://sagecell.sagemath.org/static/about.html?v=0d09e#permalinks>`_::
+
+    $ scp SOURCE_FILE REMOTE_USERNAME@REMOTE_HOST:~/sc_build/sage/sagecell/sqlite.db
+
+Example::
+
+    $ scp ~/Downloads/sqlite4transfer.db albert@192.168.0.1:~/sc_build/sage/sagecell/sqlite.db
+
 .. rubric:: Footnotes
 
 .. [1] https://help.github.com/articles/generating-ssh-keys/
