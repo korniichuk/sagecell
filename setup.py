@@ -39,6 +39,6 @@ setup(
     packages = ["sagecell"],
     platforms = ["Linux"],
     url = "https://github.com/korniichuk/sagecell",
-    version = "0.2a2",
+    version = "0.2b1",
     zip_safe = True
 )
