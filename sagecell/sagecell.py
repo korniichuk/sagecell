@@ -304,10 +304,9 @@ def ssh():
     local("ssh-keygen -t rsa -b 4096 -N '' -f ~/.ssh/id_rsa")
     # Copy a public key using the ssh-copy-id command
     local("ssh-copy-id localhost")
-    # Ensure ssh-agent is enabled
-    local("eval \"$(ssh-agent -s)\"")
-    # Adds private key identities to the authentication agent
-    local("ssh-add ~/.ssh/id_rsa")
+    # Ensure ssh-agent is enabled and adds private key identities
+    # to the authentication agent
+    local("eval \"$(ssh-agent -s)\"; ssh-add ~/.ssh/id_rsa")
 
 def start():
     """Start the Sage Cell Server"""
