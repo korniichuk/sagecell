@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from argparse import ArgumentParser
+from errno import EACCES
+from getpass import getuser
 from os import remove, rmdir
 from os.path import dirname, exists, expanduser, isdir, isfile, join
 from platform import platform
@@ -26,7 +28,7 @@ messages = {} # Strings for output
 def auto():
     """Start the Sage Cell Server automatically on boot"""
 
-    # Check distro:
+    # Check distro
     distro = check_distro()
     if distro == None:
         print(messages["_unsupported_distro"])
@@ -52,7 +54,57 @@ def auto():
         local("echo \"Y\" | sudo apt-get install screen")
     elif distro == "debian":
         local("su -c \"echo \"Y\" | apt-get install screen\"")
-    # TODO
+    # rc.local
+    rc_local_abs_path = "/etc/rc.local"
+    if exists(rc_local_abs_path) and isfile(rc_local_abs_path):
+        try:
+            with open(rc_local_abs_path, 'r') as f:
+                rc_local_lines = f.readlines()
+        except Exception as exception: # Python3 PermissionError
+            error_code = exception.errno
+            if error_code == EACCES: # 13
+                print(messages["_error_NoRoot"])
+                exit(1)
+            else:
+                print(messages["_error_Oops"] % strerror(error_code))
+                exit(1)
+    else:
+        # Create /etc/rc.local file
+        rc_local_lines = ["#!/bin/sh -e\n", "\n", "# rc.local\n", "\n",
+                          "exit 0"]
+        try:
+            with open(rc_local_abs_path, 'w') as f:
+                for line in rc_local_lines:
+                    f.write(line)
+        except Exception as exception: # Python3 PermissionError
+            error_code = exception.errno
+            if error_code == EACCES: # 13
+                print(messages["_error_NoRoot"])
+                exit(1)
+            else:
+                print(messages["_error_Oops"] % strerror(error_code))
+                exit(1)
+    try:
+        with open(rc_local_abs_path, 'w') as f:
+            for line in rc_local_lines:
+                if line == "exit 0":
+                    if distro == "ubuntu":
+                        f.write("sudo screen -dmS sagecell "
+                                "/usr/local/bin/sagecellscript\n\n")
+                    elif distro == "debian":
+                        username = getuser()
+                        f.write("su %s -c \"screen -dmS sagecell "
+                                "/usr/local/bin/sagecellscript\"\n\n" %
+                                username)
+                f.write(line)
+    except Exception as exception: # Python3 PermissionError
+        error_code = exception.errno
+        if error_code == EACCES: # 13
+            print(messages["_error_NoRoot"])
+            exit(1)
+        else:
+            print(messages["_error_Oops"] % strerror(error_code))
+            exit(1)
 
 def check_distro():
     """Check linux distro"""
@@ -86,7 +138,7 @@ def create_dictionaries():
 def install():
     """Install the Sage Cell Server"""
 
-    # Check distro:
+    # Check distro
     distro = check_distro()
     if distro == None:
         print(messages["_unsupported_distro"])
