@@ -2,7 +2,6 @@
 
 from argparse import ArgumentParser
 from errno import EACCES
-from getpass import getuser
 from os import remove, rmdir
 from os.path import dirname, exists, expanduser, isdir, isfile, join
 from platform import platform
@@ -93,7 +92,10 @@ def auto():
                         f.write("sudo screen -dmS sagecell "
                                 "/usr/local/bin/sagecellscript\n\n")
                     elif distro == "debian":
-                        username = getuser()
+                        print(messages["_ask_username"].format("\n"))
+                        answer = raw_input()
+                        answer_lower = answer.lower()
+                        username = answer_lower
                         f.write("su %s -c \"screen -dmS sagecell "
                                 "/usr/local/bin/sagecellscript\"\n\n" %
                                 username)
