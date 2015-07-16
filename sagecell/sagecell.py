@@ -23,6 +23,11 @@ config = ConfigObj(config_sagecell_abs_path)
 argparse = {} # Strings for -h --help
 messages = {} # Strings for output
 
+def auto():
+    """Start the Sage Cell Server automatically on boot"""
+
+    pass
+
 def check_distro():
     """Check linux distro"""
 
