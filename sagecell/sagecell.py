@@ -26,7 +26,28 @@ messages = {} # Strings for output
 def auto():
     """Start the Sage Cell Server automatically on boot"""
 
-    pass
+    # Check distro:
+    distro = check_distro()
+    if distro == None:
+        print(messages["_unsupported_distro"])
+        print(messages["_ask_distro"].format("\n"))
+        answer = raw_input()
+        answer_lower = answer.lower()
+        if (answer_lower == '0') or (answer_lower == 'o'):
+            exit(0)
+        elif answer_lower == '1':
+            distro = "ubuntu"
+        elif answer_lower == '2':
+            distro = "debian"
+        else:
+            print(messages["_error_UnknownValue"])
+            exit(0)
+    # Update the Package Index
+    if distro == "ubuntu":
+        local("sudo apt-get update")
+    elif distro == "debian":
+        local("su -c \"apt-get update\"")
+    # TODO
 
 def check_distro():
     """Check linux distro"""
