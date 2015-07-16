@@ -47,6 +47,11 @@ def auto():
         local("sudo apt-get update")
     elif distro == "debian":
         local("su -c \"apt-get update\"")
+    # Install screen
+    if distro == "ubuntu":
+        local("echo \"Y\" | sudo apt-get install screen")
+    elif distro == "debian":
+        local("su -c \"echo \"Y\" | apt-get install screen\"")
     # TODO
 
 def check_distro():
