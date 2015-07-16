@@ -273,6 +273,11 @@ def parse_command_line_args():
             description=argparse["_parser_ssh"],
             help=argparse["_parser_ssh"])
     parser_list.set_defaults(function_name=ssh)
+    # Create the parser for the "auto" subcommand
+    parser_list = subparsers.add_parser("auto",
+            description=argparse["_parser_auto"],
+            help=argparse["_parser_auto"])
+    parser_list.set_defaults(function_name=auto)
     if len(argv) == 1:
         parser.print_help()
         exit(0) # Clean exit without any errors/problems

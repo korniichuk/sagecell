@@ -2,6 +2,8 @@ _parser
 The Sage Cell Server installer
 _subparsers
 subcommands
+_parser_auto
+start the Sage Cell Server automatically on boot
 _parser_install
 install the Sage Cell Server
 _parser_open
