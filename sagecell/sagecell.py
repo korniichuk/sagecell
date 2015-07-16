@@ -71,7 +71,7 @@ def auto():
     else:
         # Create /etc/rc.local file
         rc_local_lines = ["#!/bin/sh -e\n", "\n", "# rc.local\n", "\n",
-                          "exit 0"]
+                          "exit 0\n"]
         try:
             with open(rc_local_abs_path, 'w') as f:
                 for line in rc_local_lines:
@@ -87,7 +87,8 @@ def auto():
     try:
         with open(rc_local_abs_path, 'w') as f:
             for line in rc_local_lines:
-                if line == "exit 0":
+                line_strip = line.strip()
+                if line_strip == "exit 0":
                     if distro == "ubuntu":
                         f.write("sudo screen -dmS sagecell "
                                 "/usr/local/bin/sagecellscript\n\n")
