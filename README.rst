@@ -1,5 +1,5 @@
 .. contents:: Table of contents
-   :depth: 2
+   :depth: 3
 
 Introduction
 ============
@@ -149,6 +149,109 @@ If you are familiar with `ssh-keygen <http://www.openbsd.org/cgi-bin/man.cgi?que
     $ ssh-copy-id localhost
     $ eval "$(ssh-agent -s)"
     $ ssh-add ~/.ssh/id_rsa
+
+Start the Sage Cell Server automatically on boot
+------------------------------------------------
+With the Sage Cell Server
+^^^^^^^^^^^^^^^^^^^^^^^^^
+::
+
+    $ sagecell auto
+
+.. note:: The default port number is 8888.
+
+For changing a port number. First, edit the ``/usr/local/bin/sagecellscript`` file::
+
+    $ sudo nano /usr/local/bin/sagecellscript
+
+or::
+
+    $ su -c "nano /usr/local/bin/sagecellscript"
+
+Second, change the last line from::
+    
+    ../sage web_server.py
+
+to::
+
+    ../sage web_server.py -p PORT_NUMBER
+
+Where:
+
+* ``PORT_NUMBER`` -- a port number.
+
+Example::
+
+    ../sage web_server.py -p 6363
+
+Without the Sage Cell Server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+First, install `screen <http://ss64.com/bash/screen.html>`_::
+
+    $ sudo apt-get install screen
+
+or::
+
+    $ su -c "apt-get install screen"
+
+Second, create the ``/usr/local/sbin/sagecellscript`` file::
+
+    #! /bin/sh
+
+    cd ~/sc_build/sage/sagecell
+    ../sage web_server.py
+
+or::
+
+    #! /bin/sh
+
+    cd ~/sc_build/sage/sagecell
+    ../sage web_server.py -p PORT_NUMBER
+
+Where:
+
+* ``PORT_NUMBER`` -- a port number.
+
+.. note:: The default port number is 8888.
+
+Example::
+
+    #! /bin/sh
+
+    cd ~/sc_build/sage/sagecell
+    ../sage web_server.py -p 6363
+
+Third, make the ``/usr/local/sbin/sagecellscript`` file  executable::
+
+    $ sudo chmod 755 /usr/local/sbin/sagecellscript
+
+or::
+
+    $ su -c "chmod 755 /usr/local/sbin/sagecellscript"
+
+Fourth, edit the ``/etc/rc.local`` file::
+
+    $ sudo nano /etc/rc.local
+
+or::
+
+    $ su -c "nano /etc/rc.local"
+
+Add the next command below the comment, but leave the line ``exit 0`` at the end, then save the file and exit::
+
+    sudo screen -dmS sagecell /usr/local/sbin/sagecellscript
+
+or::
+
+    su USERNAME -c "screen -dmS sagecell /usr/local/sbin/sagecellscript"
+
+Where:
+
+* ``USERNAME`` -- a username.
+
+Example::
+
+    su albert -c "screen -dmS sagecell /usr/local/sbin/sagecellscript"
 
 Transfer a short temporary links
 --------------------------------
