@@ -239,7 +239,7 @@ or::
 
 Add the next command below the comment, but leave the line ``exit 0`` at the end, then save the file and exit::
 
-    sudo screen -dmS sagecell /usr/local/sbin/sagecellscript
+    sudo -u USERNAME screen -dmS sagecell /usr/local/sbin/sagecellscript
 
 or::
 
