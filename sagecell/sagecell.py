@@ -267,7 +267,7 @@ def install():
         local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
               "setuptools" % sage_path)
     elif distro == "debian":
-        local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+        local("cd %s; su -c \"./sage -pip install "
               "--no-deps --upgrade setuptools\"" % sage_path)
     local("cd %s; ../sage setup.py install" % join(sage_path, "matplotlib"))
     # We need a cutting-edge matplotlib/
@@ -282,13 +282,13 @@ def install():
         local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
               "sockjs-tornado" % sage_path)
     elif distro == "debian":
-        local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+        local("cd %s; su -c \"./sage -pip install "
               "--no-deps --upgrade ecdsa\"" % sage_path)
-        local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+        local("cd %s; su -c \"./sage -pip install "
               "--no-deps --upgrade lockfile\"" % sage_path)
-        local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+        local("cd %s; su -c \"./sage -pip install "
               "--no-deps --upgrade paramiko\"" % sage_path)
-        local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+        local("cd %s; su -c \"./sage -pip install "
               "--no-deps --upgrade sockjs-tornado\"" % sage_path)
     # Move sagecell folder
     sagecell_path_old = join(sc_build_path, "github/sagecell")
@@ -315,7 +315,7 @@ def install():
             local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
                   "psutil" % sage_path)
         elif distro == "debian":
-            local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+            local("cd %s; su -c \"./sage -pip install "
                   "--no-deps --upgrade psutil\"" % sage_path)
     # Check SQLAlchemy
     sqlalchemy_path = expanduser("~/sc_build/sage/local/lib/python2.7/"
@@ -326,7 +326,7 @@ def install():
             local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
                   "SQLAlchemy" % sage_path)
         elif distro == "debian":
-            local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+            local("cd %s; su -c \"./sage -pip install "
                   "--no-deps --upgrade SQLAlchemy\"" % sage_path)
     print(messages["_installed"])
 
