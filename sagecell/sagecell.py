@@ -259,10 +259,18 @@ def install():
     ipython_path = join(sc_build_path, "github/ipython")
     local("mv %s %s" % (ipython_path, sage_path))
     local("cd %s; ../sage setup.py develop" % join(sage_path, "ipython"))
-    # We need a cutting-edge matplotlib
+    # We need a cutting-edge matplotlib/
     matplotlib_path = join(sc_build_path, "github/matplotlib")
     local("mv %s %s" % (matplotlib_path, sage_path))
+    # Update setuptools for matplotlib installation
+    if distro == "ubuntu":
+        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+              "setuptools" % sage_path)
+    elif distro == "debian":
+        local("cd %s; su -c \"echo \"Y\" | ./sage -pip install "
+              "--no-deps --upgrade setuptools\"" % sage_path)
     local("cd %s; ../sage setup.py install" % join(sage_path, "matplotlib"))
+    # We need a cutting-edge matplotlib/
     # Install ecdsa, lockfile, paramiko, sockjs-tornado
     if distro == "ubuntu":
         local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
