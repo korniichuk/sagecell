@@ -41,6 +41,6 @@ setup(
     platforms = ["Linux"],
     scripts=['scripts/sagecellscript'],
     url = "https://github.com/korniichuk/sagecell",
-    version = "0.2b4",
+    version = "0.2b5",
     zip_safe = True
 )
