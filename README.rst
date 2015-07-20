@@ -251,6 +251,10 @@ Where:
 
 Example::
 
+    sudo -u albert screen -dmS sagecell /usr/local/sbin/sagecellscript
+
+or::
+
     su albert -c "screen -dmS sagecell /usr/local/sbin/sagecellscript"
 
 Transfer a short temporary links
