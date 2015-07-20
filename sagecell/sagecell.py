@@ -344,7 +344,7 @@ def parse_command_line_args():
     parser = ArgumentParser(prog="sagecell", description=argparse["_parser"],
                             add_help=True)
     parser.add_argument("-v", "--version", action="version",
-                        version="sagecell 0.2b3")
+                        version="sagecell 0.2b4")
     # Create subparsers for the top parser
     subparsers = parser.add_subparsers(title=argparse["_subparsers"])
     # Create the parser for the "install" subcommand
