@@ -88,14 +88,15 @@ def auto():
             for line in rc_local_lines:
                 line_strip = line.strip()
                 if line_strip == "exit 0":
+                    print(messages["_ask_username"].format("\n"))
+                    answer = raw_input()
+                    answer_lower = answer.lower()
+                    username = answer_lower
                     if distro == "ubuntu":
-                        f.write("sudo screen -dmS sagecell "
-                                "/usr/local/bin/sagecellscript\n\n")
+                        f.write("sudo -u %s screen -dmS sagecell "
+                                "/usr/local/bin/sagecellscript\n\n" %
+                                username)
                     elif distro == "debian":
-                        print(messages["_ask_username"].format("\n"))
-                        answer = raw_input()
-                        answer_lower = answer.lower()
-                        username = answer_lower
                         f.write("su %s -c \"screen -dmS sagecell "
                                 "/usr/local/bin/sagecellscript\"\n\n" %
                                 username)
