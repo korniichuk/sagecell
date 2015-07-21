@@ -7,7 +7,7 @@ setup(
     author = "Ruslan Korniichuk",
     author_email = "ruslan.korniichuk@gmail.com",
     classifiers = [
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "Intended Audience :: Information Technology",
@@ -41,6 +41,6 @@ setup(
     platforms = ["Linux"],
     scripts=['scripts/sagecellscript'],
     url = "https://github.com/korniichuk/sagecell",
-    version = "0.2b6",
+    version = "0.2rc1",
     zip_safe = True
 )
