@@ -267,6 +267,24 @@ Example::
 
     $ scp ~/Downloads/sqlite4transfer.db albert@192.168.0.1:~/sc_build/sage/sagecell/sqlite.db
 
+Disable the terms of service requirement
+----------------------------------------
+For disabling the terms of service requirement. First, edit the ``~/sc_build/sage/sagecell/config.py`` file::
+
+    $ nano ~/sc_build/sage/sagecell/config.py
+
+Second, change the line of code from::
+
+    requires_tos = True
+
+to::
+
+    requires_tos = False
+
+Third, reboot a server from command line::
+
+    $ reboot
+
 .. rubric:: Footnotes
 
 .. [1] https://help.github.com/articles/generating-ssh-keys/
