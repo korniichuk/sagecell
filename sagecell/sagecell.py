@@ -193,7 +193,7 @@ def install():
             local("su -c \"echo \"Y\" | apt-get install git\"")
     # Check pip
     try:
-        pip_version = check_output("pip -V", shell=True)
+        pip_version = check_output("pip --version", shell=True)
     except CalledProcessError:
         # Install pip
         if distro == "ubuntu":
