@@ -303,15 +303,15 @@ def install():
     local("cd %s; cp config_default.py config.py" % join(sage_path,
                                                          "sagecell"))
     # Check SQLAlchemy
-    sqlalchemy_path = expanduser("~/sc_build/sage/local/lib/python2.7/"
+    sqlalchemy_path = expanduser("~/sc_build/sage/sage/local/lib/python2.7/"
                                  "sqlalchemy")
     if not exists(sqlalchemy_path):
         # Install SQLAlchemy
         if distro == "ubuntu":
-            local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+            local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
                   "SQLAlchemy" % sage_path)
         elif distro == "debian":
-            local("cd %s; su -c \"./sage -pip install "
+            local("cd %s; su -c \"sage/sage -pip install "
                   "--no-deps --upgrade SQLAlchemy\"" % sage_path)
     print(messages["_installed"])
 
