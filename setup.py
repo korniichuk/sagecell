@@ -23,7 +23,7 @@ setup(
         "Topic :: System :: Systems Administration",
         "Topic :: Utilities"
     ],
-    description = ("The Sage Cell Server installer"),
+    description = ("The SageMathCell installer"),
     download_url = "https://github.com/korniichuk/sagecell/archive/0.3.zip",
     entry_points = {
         'console_scripts': 'sagecell = sagecell.sagecell:main'
@@ -33,7 +33,7 @@ setup(
         "configobj",
         "fabric"
     ],
-    keywords = ["python2", "sagecell", "sagecell installer", "sagemath"],
+    keywords = ["installer", "python2", "sagecell", "sagemathcell"],
     license = "Public Domain",
     long_description = open(join(dirname(__file__), "README.rst")).read(),
     name = "sagecell",

@@ -1,5 +1,5 @@
 #! /bin/sh
 
-# Start the Sage Cell Server
+# Start the SageMathCell
 cd ~/sc_build/sage/sagecell
 ../sage/sage web_server.py

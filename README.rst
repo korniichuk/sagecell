@@ -3,11 +3,11 @@
 
 Introduction
 ============
-Yep, you can use this `NOT simple installation <https://github.com/sagemath/sagecell#simple-installation>`_. Oops, does not work. Use the Sage Cell Server installer, because it is just easier :).
+Yep, you can use this `NOT simple installation <https://github.com/sagemath/sagecell#simple-installation>`_. Oops, does not work. Use the SageMathCell installer, because it is just easier :).
 
 Portability
 ===========
-The Sage Cell Server installer tested on **Ubuntu 14.04.2 LTS**, **Ubuntu 15.04** and **Debian 7.8**.
+The SageMathCell installer tested on **Ubuntu 14.04.2 LTS**, **Ubuntu 15.04** and **Debian 7.8**.
 
 Installation
 ============
@@ -49,7 +49,7 @@ Development installation
 
 Quickstart
 ==========
-**First**, install the Sage Cell Server::
+**First**, install the SageMathCell::
 
     $ sagecell install
 
@@ -59,7 +59,7 @@ Quickstart
 
 .. note:: You can `setup SSH for auto login to localhost without a password`_ like this: ``$ sagecell ssh``.
 
-**Third**, start the Sage Cell Server::
+**Third**, start the SageMathCell::
 
     $ sagecell start
 
@@ -69,7 +69,7 @@ Quickstart
 
     $ sagecell open
 
-This command open browser with the Sage Cell Server.
+This command open browser with the SageMathCell.
 
 Express
 -------
@@ -116,26 +116,26 @@ or::
 
     $ sagecell --version
 
-Install the Sage Cell Server
-----------------------------
+Install the SageMathCell
+------------------------
 ::
 
     $ sagecell install
 
-Start the Sage Cell Server
---------------------------
+Start the SageMathCell
+----------------------
 ::
 
     $ sagecell start
 
-Open browser with the Sage Cell Server
---------------------------------------
+Open browser with the SageMathCell
+----------------------------------
 ::
 
     $ sagecell open
 
-.. image:: ./img/user_guide-_open_browser_with_the_sage_cell_server_0001_728px.png
-  :alt: user guide: open browser with the sage cell server [prtscn]
+.. image:: ./img/user_guide-_open_browser_with_the_sagemathcell_0001_728px.png
+  :alt: user guide: open browser with the sagemathcell [prtscn]
 
 Setup SSH for auto login to localhost without a password
 --------------------------------------------------------
@@ -150,10 +150,10 @@ If you are familiar with `ssh-keygen <http://www.openbsd.org/cgi-bin/man.cgi?que
     $ eval "$(ssh-agent -s)"
     $ ssh-add ~/.ssh/id_rsa
 
-Start the Sage Cell Server automatically on boot
-------------------------------------------------
-With the Sage Cell Server
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Start the SageMathCell automatically on boot
+--------------------------------------------
+With the SageMathCell
+^^^^^^^^^^^^^^^^^^^^^
 ::
 
     $ sagecell auto
@@ -184,8 +184,8 @@ Example::
 
     ../sage web_server.py -p 6363
 
-Without the Sage Cell Server
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Without the SageMathCell
+^^^^^^^^^^^^^^^^^^^^^^^^
 First, install `screen <http://ss64.com/bash/screen.html>`_::
 
     $ sudo apt-get install screen

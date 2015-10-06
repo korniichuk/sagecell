@@ -5,7 +5,7 @@ Do you have stable Internet access? [y/n]
 _ask_username
 Enter username:
 _error_Internet
-Error: You can not install the Sage Cell Server without stable Internet access
+Error: You can not install the SageMathCell without stable Internet access
 _error_NoRoot
 Error: To do that you need a superuser (root) privileges.
 _error_Oops
@@ -13,6 +13,6 @@ Error: %s.
 _error_UnknownValue
 Error: Unknown value
 _installed
-successfully installed the Sage Cell Server
+successfully installed the SageMathCell
 _unsupported_distro
-The Sage Cell Server installer does not support your platform.
+The SageMathCell installer does not support your platform.

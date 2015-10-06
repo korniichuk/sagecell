@@ -1,7 +1,7 @@
 #! /usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-"""The Sage Cell Server installer fabric file"""
+"""The SageMathCell installer fabric file"""
 
 from fabric.api import local
 

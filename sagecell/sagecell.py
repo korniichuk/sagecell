@@ -25,7 +25,7 @@ argparse = {} # Strings for -h --help
 messages = {} # Strings for output
 
 def auto():
-    """Start the Sage Cell Server automatically on boot"""
+    """Start the SageMathCell automatically on boot"""
 
     # Check distro
     distro = check_distro()
@@ -142,7 +142,7 @@ def create_dictionaries():
         messages[messages_list[i]] = messages_list[i+1]
 
 def install():
-    """Install the Sage Cell Server"""
+    """Install the SageMathCell"""
 
     # Check distro
     distro = check_distro()
@@ -363,7 +363,7 @@ def parse_command_line_args():
     return parser.parse_args()
 
 def open_sagemathcell():
-    """Open browser with the Sage Cell Server"""
+    """Open browser with the SageMathCell"""
 
     local("xdg-open http://localhost:8888")
 
@@ -393,7 +393,7 @@ def ssh():
     local("eval \"$(ssh-agent -s)\"; ssh-add ~/.ssh/id_rsa")
 
 def start():
-    """Start the Sage Cell Server"""
+    """Start the SageMathCell"""
 
     sagecell_path = expanduser("~/sc_build/sage/sagecell")
     local("cd %s; ../sage/sage web_server.py" % sagecell_path)
