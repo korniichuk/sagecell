@@ -231,95 +231,77 @@ def install():
         local("sudo npm install -g inherits requirejs coffee-script")
     elif distro == "debian":
         local("su -c \"npm install -g inherits requirejs coffee-script\"")
-    # Download repositories from GitHub/
-    # Create a directory for building images
+    # Create a directory for all components
     sc_build_path = expanduser("~/sc_build")
     local("mkdir %s" % sc_build_path)
-    # Get clone_repositories
-    local("cd %s; wget https://github.com/sagemath/sagecell"
-          "/raw/master/contrib/vm/clone_repositories" % sc_build_path)
-    # Make clone_repositories bash script executable
-    local("cd %s; chmod u+x clone_repositories" % sc_build_path)
-    # Run clone_repositories bash script
-    local("cd %s; ./clone_repositories" % sc_build_path)
-    # /Download repositories from GitHub
-    # Move sage folder
-    sage_path_old = join(sc_build_path, "github/sage")
-    local("mv %s %s" % (sage_path_old, sc_build_path))
+    # Get Sage
+    local("cd %s; git clone https://github.com/novoselt/sage.git" %
+            sc_build_path)
+    sage_path = join(sc_build_path, "sage")
+    local("cd %s; git checkout sagecell" % sage_path)
+    local("cd %s; git submodule update --init --recursive" % sage_path)
     # Install Sage dependencies
     if distro == "ubuntu":
         local("echo \"Y\" | sudo apt-get install gcc m4 make perl tar")
     elif distro == "debian":
         local("su -c \"echo \"Y\" | apt-get install gcc m4 make perl tar\"")
     # Build Sage
-    sage_path = join(sc_build_path, "sage")
-    local("cd %s; make start" % sage_path)
+    local("cd %s; make" % sage_path)
+    # Install threejs
+    if distro == "ubuntu":
+        local("cd %s; sudo ./sage -i threejs" % sage_path)
+    elif distro == "debian":
+        local("cd %s; su -c \"./sage -i threejs\"" % sage_path)
     # We need IPython stuff, not present in spkg
     local("cd %s; rm -rf IPython*" % join(sage_path,
-            "local/lib/python/site-packages"))
+            "sage/local/lib/python/site-packages"))
     local("cd %s; rm -rf ipython*" % join(sage_path,
-            "local/lib/python/site-packages"))
-    ipython_path = join(sc_build_path, "github/ipython")
-    local("mv %s %s" % (ipython_path, sage_path))
-    local("cd %s; ../sage setup.py develop" % join(sage_path, "ipython"))
-    # We need a cutting-edge matplotlib/
-    matplotlib_path = join(sc_build_path, "github/matplotlib")
-    local("mv %s %s" % (matplotlib_path, sage_path))
-    # Update setuptools for matplotlib installation
+            "sage/local/lib/python/site-packages"))
+    local("cd %s; git clone https://github.com/novoselt/ipython.git" %
+            sc_build_path)
+    local("cd %s; git checkout sagecell" % join(sc_build_path, "ipython"))
+    local("cd %s; git submodule update --init --recursive" %
+            join(sc_build_path, "ipython"))
+    local("cd %s; ../sage/sage setup.py develop" % join(sc_build_path,
+                                                        "ipython"))
+    # Install python-dev for psutil installation
     if distro == "ubuntu":
-        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
-              "setuptools" % sage_path)
+        local("echo \"Y\" | sudo apt-get install python-dev")
     elif distro == "debian":
-        local("cd %s; su -c \"./sage -pip install "
-              "--no-deps --upgrade setuptools\"" % sage_path)
-    local("cd %s; ../sage setup.py install" % join(sage_path, "matplotlib"))
-    # We need a cutting-edge matplotlib/
-    # Install ecdsa, lockfile, paramiko, sockjs-tornado
+        local("su -c \"echo \"Y\" | apt-get install python-dev\"")
+    # Install ecdsa, lockfile, paramiko, psutil, sockjs-tornado
     if distro == "ubuntu":
-        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+        local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
               "ecdsa" % sage_path)
-        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+        local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
               "lockfile" % sage_path)
-        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+        local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
               "paramiko" % sage_path)
-        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+        local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
+              "psutil" % sage_path)
+        local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
               "sockjs-tornado" % sage_path)
     elif distro == "debian":
-        local("cd %s; su -c \"./sage -pip install "
+        local("cd %s; su -c \"sage/sage -pip install "
               "--no-deps --upgrade ecdsa\"" % sage_path)
-        local("cd %s; su -c \"./sage -pip install "
+        local("cd %s; su -c \"sage/sage -pip install "
               "--no-deps --upgrade lockfile\"" % sage_path)
-        local("cd %s; su -c \"./sage -pip install "
+        local("cd %s; su -c \"sage/sage -pip install "
               "--no-deps --upgrade paramiko\"" % sage_path)
-        local("cd %s; su -c \"./sage -pip install "
+        local("cd %s; su -c \"sage/sage -pip install "
+              "--no-deps --upgrade psutil\"" % sage_path)
+        local("cd %s; su -c \"sage/sage -pip install "
               "--no-deps --upgrade sockjs-tornado\"" % sage_path)
-    # Move sagecell folder
-    sagecell_path_old = join(sc_build_path, "github/sagecell")
-    local("mv %s %s" % (sagecell_path_old, sage_path))
-    # Delete empty github dir
-    github_path = join(sc_build_path, "github")
-    if exists(github_path) and isdir(github_path):
-        rmdir(github_path)
     # Build SageMathCell
-    local("cd %s; ../sage -sh -c \"make -B\"" % join(sage_path, "sagecell"))
+    local("cd %s; git clone https://github.com/sagemath/sagecell.git" %
+            sc_build_path)
+    local("cd %s; git submodule update --init --recursive" % join(sage_path,
+                                                                  "sagecell"))
+    local("cd %s; ../sage/sage -sh -c \"make -B\"" % join(sage_path,
+                                                          "sagecell"))
     # Configuration
     local("cd %s; cp config_default.py config.py" % join(sage_path,
                                                          "sagecell"))
-    # Check psutil
-    psutil_path = expanduser("~/sc_build/sage/local/lib/python2.7/psutil")
-    if not exists(psutil_path):
-        # Install python-dev for psutil installation
-        if distro == "ubuntu":
-            local("echo \"Y\" | sudo apt-get install python-dev")
-        elif distro == "debian":
-            local("su -c \"echo \"Y\" | apt-get install python-dev\"")
-        # Install psutil
-        if distro == "ubuntu":
-            local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
-                  "psutil" % sage_path)
-        elif distro == "debian":
-            local("cd %s; su -c \"./sage -pip install "
-                  "--no-deps --upgrade psutil\"" % sage_path)
     # Check SQLAlchemy
     sqlalchemy_path = expanduser("~/sc_build/sage/local/lib/python2.7/"
                                  "sqlalchemy")
@@ -414,4 +396,4 @@ def start():
     """Start the Sage Cell Server"""
 
     sagecell_path = expanduser("~/sc_build/sage/sagecell")
-    local("cd %s; ../sage web_server.py" % sagecell_path)
+    local("cd %s; ../sage/sage web_server.py" % sagecell_path)
