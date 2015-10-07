@@ -144,6 +144,10 @@ def create_dictionaries():
 def install():
     """Install the SageMathCell"""
 
+    sc_build_path = expanduser("~/sc_build")
+    sage_path = join(sc_build_path, "sage")
+    sqlalchemy_path = join(sage_path, "local/lib/python2.7/sqlalchemy")
+
     # Check distro
     distro = check_distro()
     if distro == None:
@@ -232,12 +236,10 @@ def install():
     elif distro == "debian":
         local("su -c \"npm install -g inherits requirejs coffee-script\"")
     # Create a directory for all components
-    sc_build_path = expanduser("~/sc_build")
     local("mkdir %s" % sc_build_path)
     # Get Sage
     local("cd %s; git clone https://github.com/novoselt/sage.git" %
             sc_build_path)
-    sage_path = join(sc_build_path, "sage")
     local("cd %s; git checkout sagecell" % sage_path)
     local("cd %s; git submodule update --init --recursive" % sage_path)
     # Install Sage dependencies
@@ -253,10 +255,10 @@ def install():
     elif distro == "debian":
         local("cd %s; su -c \"./sage -i threejs\"" % sage_path)
     # We need IPython stuff, not present in spkg
-    local("cd %s; rm -rf IPython*" % join(sc_build_path,
-            "sage/local/lib/python/site-packages"))
-    local("cd %s; rm -rf ipython*" % join(sc_build_path,
-            "sage/local/lib/python/site-packages"))
+    local("cd %s; rm -rf IPython*" % join(sage_path,
+            "local/lib/python/site-packages"))
+    local("cd %s; rm -rf ipython*" % join(sage_path,
+            "local/lib/python/site-packages"))
     local("cd %s; git clone https://github.com/novoselt/ipython.git" %
             sc_build_path)
     local("cd %s; git checkout sagecell" % join(sc_build_path, "ipython"))
@@ -271,27 +273,27 @@ def install():
         local("su -c \"echo \"Y\" | apt-get install python-dev\"")
     # Install ecdsa, lockfile, paramiko, psutil, sockjs-tornado
     if distro == "ubuntu":
-        local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
-              "ecdsa" % sc_build_path)
-        local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
-              "lockfile" % sc_build_path)
-        local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
-              "paramiko" % sc_build_path)
-        local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
-              "psutil" % sc_build_path)
-        local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
-              "sockjs-tornado" % sc_build_path)
+        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+              "ecdsa" % sage_path)
+        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+              "lockfile" % sage_path)
+        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+              "paramiko" % sage_path)
+        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+              "psutil" % sage_path)
+        local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+              "sockjs-tornado" % sage_path)
     elif distro == "debian":
-        local("cd %s; su -c \"sage/sage -pip install "
-              "--no-deps --upgrade ecdsa\"" % sc_build_path)
-        local("cd %s; su -c \"sage/sage -pip install "
-              "--no-deps --upgrade lockfile\"" % sc_build_path)
-        local("cd %s; su -c \"sage/sage -pip install "
-              "--no-deps --upgrade paramiko\"" % sc_build_path)
-        local("cd %s; su -c \"sage/sage -pip install "
-              "--no-deps --upgrade psutil\"" % sc_build_path)
-        local("cd %s; su -c \"sage/sage -pip install "
-              "--no-deps --upgrade sockjs-tornado\"" % sc_build_path)
+        local("cd %s; su -c \"./sage -pip install "
+              "--no-deps --upgrade ecdsa\"" % sage_path)
+        local("cd %s; su -c \"./sage -pip install "
+              "--no-deps --upgrade lockfile\"" % sage_path)
+        local("cd %s; su -c \"./sage -pip install "
+              "--no-deps --upgrade paramiko\"" % sage_path)
+        local("cd %s; su -c \"./sage -pip install "
+              "--no-deps --upgrade psutil\"" % sage_path)
+        local("cd %s; su -c \"./sage -pip install "
+              "--no-deps --upgrade sockjs-tornado\"" % sage_path)
     # Build SageMathCell
     local("cd %s; git clone https://github.com/sagemath/sagecell.git" %
             sc_build_path)
@@ -303,16 +305,14 @@ def install():
     local("cd %s; cp config_default.py config.py" % join(sc_build_path,
                                                          "sagecell"))
     # Check SQLAlchemy
-    sqlalchemy_path = expanduser("~/sc_build/sage/local/lib/python2.7/"
-                                 "sqlalchemy")
     if not exists(sqlalchemy_path):
         # Install SQLAlchemy
         if distro == "ubuntu":
-            local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
-                  "SQLAlchemy" % sc_build_path)
+            local("cd %s; sudo ./sage -pip install --no-deps --upgrade "
+                  "SQLAlchemy" % sage_path)
         elif distro == "debian":
-            local("cd %s; su -c \"sage/sage -pip install "
-                  "--no-deps --upgrade SQLAlchemy\"" % sc_build_path)
+            local("cd %s; su -c \"./sage -pip install "
+                  "--no-deps --upgrade SQLAlchemy\"" % sage_path)
     print(messages["_installed"])
 
 def main():
@@ -396,4 +396,5 @@ def start():
     """Start the SageMathCell"""
 
     sagecell_path = expanduser("~/sc_build/sagecell")
+
     local("cd %s; ../sage/sage web_server.py" % sagecell_path)
