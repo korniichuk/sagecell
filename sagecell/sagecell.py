@@ -295,8 +295,8 @@ def install():
     # Build SageMathCell
     local("cd %s; git clone https://github.com/sagemath/sagecell.git" %
             sc_build_path)
-    local("cd %s; git submodule update --init --recursive" % join(sage_path,
-                                                                  "sagecell"))
+    local("cd %s; git submodule update --init --recursive" %
+            join(sc_build_path, "sagecell"))
     local("cd %s; ../sage/sage -sh -c \"make -B\"" % join(sage_path,
                                                           "sagecell"))
     # Configuration
