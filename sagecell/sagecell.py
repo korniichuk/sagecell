@@ -297,7 +297,7 @@ def install():
             sc_build_path)
     local("cd %s; git submodule update --init --recursive" %
             join(sc_build_path, "sagecell"))
-    local("cd %s; ../sage/sage -sh -c \"make -B\"" % join(sage_path,
+    local("cd %s; ../sage/sage -sh -c \"make -B\"" % join(sc_build_path,
                                                           "sagecell"))
     # Configuration
     local("cd %s; cp config_default.py config.py" % join(sage_path,
