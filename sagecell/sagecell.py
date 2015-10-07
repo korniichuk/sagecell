@@ -272,26 +272,26 @@ def install():
     # Install ecdsa, lockfile, paramiko, psutil, sockjs-tornado
     if distro == "ubuntu":
         local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
-              "ecdsa" % sage_path)
+              "ecdsa" % sc_build_path)
         local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
-              "lockfile" % sage_path)
+              "lockfile" % sc_build_path)
         local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
-              "paramiko" % sage_path)
+              "paramiko" % sc_build_path)
         local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
-              "psutil" % sage_path)
+              "psutil" % sc_build_path)
         local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
-              "sockjs-tornado" % sage_path)
+              "sockjs-tornado" % sc_build_path)
     elif distro == "debian":
         local("cd %s; su -c \"sage/sage -pip install "
-              "--no-deps --upgrade ecdsa\"" % sage_path)
+              "--no-deps --upgrade ecdsa\"" % sc_build_path)
         local("cd %s; su -c \"sage/sage -pip install "
-              "--no-deps --upgrade lockfile\"" % sage_path)
+              "--no-deps --upgrade lockfile\"" % sc_build_path)
         local("cd %s; su -c \"sage/sage -pip install "
-              "--no-deps --upgrade paramiko\"" % sage_path)
+              "--no-deps --upgrade paramiko\"" % sc_build_path)
         local("cd %s; su -c \"sage/sage -pip install "
-              "--no-deps --upgrade psutil\"" % sage_path)
+              "--no-deps --upgrade psutil\"" % sc_build_path)
         local("cd %s; su -c \"sage/sage -pip install "
-              "--no-deps --upgrade sockjs-tornado\"" % sage_path)
+              "--no-deps --upgrade sockjs-tornado\"" % sc_build_path)
     # Build SageMathCell
     local("cd %s; git clone https://github.com/sagemath/sagecell.git" %
             sc_build_path)
