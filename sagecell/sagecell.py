@@ -2,7 +2,7 @@
 
 from argparse import ArgumentParser
 from errno import EACCES
-from os import remove, rmdir
+from os import remove
 from os.path import dirname, exists, expanduser, isdir, isfile, join
 from platform import platform
 from subprocess import check_output, CalledProcessError
@@ -145,6 +145,7 @@ def install():
     """Install the SageMathCell"""
 
     sc_build_path = expanduser("~/sc_build")
+    nodejs_alias_abs_path = "/usr/bin/node"
     sage_path = join(sc_build_path, "sage")
     sqlalchemy_path = join(sage_path, "local/lib/python2.7/sqlalchemy")
 
@@ -224,7 +225,6 @@ def install():
         local("su -c \"echo \"Y\" | apt-get install --yes nodejs\"")
         local("su -c \"curl https://www.npmjs.com/install.sh | sh\"")
     # Make an alias
-    nodejs_alias_abs_path = "/usr/bin/node"
     if not exists(nodejs_alias_abs_path):
         if distro == "ubuntu":
             local("sudo ln -s /usr/bin/nodejs %s" % nodejs_alias_abs_path)
@@ -236,6 +236,27 @@ def install():
     elif distro == "debian":
         local("su -c \"npm install -g inherits requirejs coffee-script\"")
     # Create a directory for all components
+    if exists(sc_build_path):
+        if isdir(sc_build_path):
+            print(messages["_ask_replace"] % ("sc_build", "dir"))
+            answer = raw_input()
+            answer_lower = answer.lower()
+            if ((answer_lower == 'y') or (answer_lower == 'yes') or
+                    (answer_lower == 'yep')):
+                local("rm -r %s" % sc_build_path)
+            else:
+                print(messages["_error_replace"] % ("sc_build", "dir"))
+                exit(0)
+        elif isfile(sc_build_path):
+            print(messages["_ask_replace"] % ("sc_build", "file"))
+            answer = raw_input()
+            answer_lower = answer.lower()
+            if ((answer_lower == 'y') or (answer_lower == 'yes') or
+                    (answer_lower == 'yep')):
+                local("rm %s" % sc_build_path)
+            else:
+                print(messages["_error_replace"] % ("sc_build", "file"))
+                exit(0)
     local("mkdir %s" % sc_build_path)
     # Get Sage
     local("cd %s; git clone https://github.com/novoselt/sage.git" %

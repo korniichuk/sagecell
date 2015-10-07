@@ -2,6 +2,8 @@ _ask_distro
 Enter:{0}    0 -- Exit{0}    1 -- Ubuntu linux distro installation{0}    2 -- Debian linux distro installation
 _ask_internet
 Do you have stable Internet access? [y/n]
+_ask_replace
+Replace '%s' %s? [y/n]
 _ask_username
 Enter username:
 _error_Internet
@@ -10,6 +12,8 @@ _error_NoRoot
 Error: To do that you need a superuser (root) privileges.
 _error_Oops
 Error: %s.
+_error_replace
+Error: Rename or delete the '%s' %s and repeat the installation.
 _error_UnknownValue
 Error: Unknown value
 _installed
