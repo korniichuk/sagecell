@@ -303,7 +303,7 @@ def install():
     local("cd %s; cp config_default.py config.py" % join(sc_build_path,
                                                          "sagecell"))
     # Check SQLAlchemy
-    sqlalchemy_path = expanduser("~/sc_build/sage/sage/local/lib/python2.7/"
+    sqlalchemy_path = expanduser("~/sc_build/sage/local/lib/python2.7/"
                                  "sqlalchemy")
     if not exists(sqlalchemy_path):
         # Install SQLAlchemy
@@ -395,5 +395,5 @@ def ssh():
 def start():
     """Start the SageMathCell"""
 
-    sagecell_path = expanduser("~/sc_build/sage/sagecell")
+    sagecell_path = expanduser("~/sc_build/sagecell")
     local("cd %s; ../sage/sage web_server.py" % sagecell_path)
