@@ -300,7 +300,7 @@ def install():
     local("cd %s; ../sage/sage -sh -c \"make -B\"" % join(sc_build_path,
                                                           "sagecell"))
     # Configuration
-    local("cd %s; cp config_default.py config.py" % join(sage_path,
+    local("cd %s; cp config_default.py config.py" % join(sc_build_path,
                                                          "sagecell"))
     # Check SQLAlchemy
     sqlalchemy_path = expanduser("~/sc_build/sage/sage/local/lib/python2.7/"
