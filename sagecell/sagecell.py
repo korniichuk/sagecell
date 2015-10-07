@@ -309,10 +309,10 @@ def install():
         # Install SQLAlchemy
         if distro == "ubuntu":
             local("cd %s; sudo sage/sage -pip install --no-deps --upgrade "
-                  "SQLAlchemy" % sage_path)
+                  "SQLAlchemy" % sc_build_path)
         elif distro == "debian":
             local("cd %s; su -c \"sage/sage -pip install "
-                  "--no-deps --upgrade SQLAlchemy\"" % sage_path)
+                  "--no-deps --upgrade SQLAlchemy\"" % sc_build_path)
     print(messages["_installed"])
 
 def main():
