@@ -253,9 +253,9 @@ def install():
     elif distro == "debian":
         local("cd %s; su -c \"./sage -i threejs\"" % sage_path)
     # We need IPython stuff, not present in spkg
-    local("cd %s; rm -rf IPython*" % join(sage_path,
+    local("cd %s; rm -rf IPython*" % join(sc_build_path,
             "sage/local/lib/python/site-packages"))
-    local("cd %s; rm -rf ipython*" % join(sage_path,
+    local("cd %s; rm -rf ipython*" % join(sc_build_path,
             "sage/local/lib/python/site-packages"))
     local("cd %s; git clone https://github.com/novoselt/ipython.git" %
             sc_build_path)
