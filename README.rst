@@ -152,8 +152,8 @@ If you are familiar with `ssh-keygen <http://www.openbsd.org/cgi-bin/man.cgi?que
 
 Start the SageMathCell automatically on boot
 --------------------------------------------
-With the SageMathCell
-^^^^^^^^^^^^^^^^^^^^^
+With the SageMathCell installer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ::
 
     $ sagecell auto
@@ -184,8 +184,8 @@ Example::
 
     ../sage/sage web_server.py -p 6363
 
-Without the SageMathCell
-^^^^^^^^^^^^^^^^^^^^^^^^
+Without the SageMathCell installer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 First, install `screen <http://ss64.com/bash/screen.html>`_::
 
     $ sudo apt-get install screen
