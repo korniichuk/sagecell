@@ -169,12 +169,12 @@ or::
     $ su -c "nano /usr/local/bin/sagecellscript"
 
 Second, change the last line from::
-    
-    ../sage web_server.py
+
+    ../sage/sage web_server.py
 
 to::
 
-    ../sage web_server.py -p PORT_NUMBER
+    ../sage/sage web_server.py -p PORT_NUMBER
 
 Where:
 
@@ -182,7 +182,7 @@ Where:
 
 Example::
 
-    ../sage web_server.py -p 6363
+    ../sage/sage web_server.py -p 6363
 
 Without the SageMathCell
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -198,15 +198,15 @@ Second, create the ``/usr/local/sbin/sagecellscript`` file::
 
     #! /bin/sh
 
-    cd ~/sc_build/sage/sagecell
-    ../sage web_server.py
+    cd ~/sc_build/sagecell
+    ../sage/sage web_server.py
 
 or::
 
     #! /bin/sh
 
-    cd ~/sc_build/sage/sagecell
-    ../sage web_server.py -p PORT_NUMBER
+    cd ~/sc_build/sagecell
+    ../sage/sage web_server.py -p PORT_NUMBER
 
 Where:
 
@@ -218,8 +218,8 @@ Example::
 
     #! /bin/sh
 
-    cd ~/sc_build/sage/sagecell
-    ../sage web_server.py -p 6363
+    cd ~/sc_build/sagecell
+    ../sage/sage web_server.py -p 6363
 
 Third, make the ``/usr/local/sbin/sagecellscript`` file  executable::
 
@@ -259,19 +259,19 @@ or::
 
 Transfer a short temporary links
 --------------------------------
-Replace the ``~/sc_build/sage/sagecell/sqlite.db`` file with a `shortened temporary links <http://sagecell.sagemath.org/static/about.html?v=0d09e#permalinks>`_::
+Replace the ``~/sc_build/sagecell/sqlite.db`` file with a `shortened temporary links <http://sagecell.sagemath.org/static/about.html?v=0d09e#permalinks>`_::
 
-    $ scp SOURCE_FILE REMOTE_USERNAME@REMOTE_HOST:~/sc_build/sage/sagecell/sqlite.db
+    $ scp SOURCE_FILE REMOTE_USERNAME@REMOTE_HOST:~/sc_build/sagecell/sqlite.db
 
 Example::
 
-    $ scp ~/Downloads/sqlite4transfer.db albert@192.168.0.1:~/sc_build/sage/sagecell/sqlite.db
+    $ scp ~/Downloads/sqlite4transfer.db albert@192.168.0.1:~/sc_build/sagecell/sqlite.db
 
 Disable the terms of service requirement
 ----------------------------------------
-For disabling the terms of service requirement. First, edit the ``~/sc_build/sage/sagecell/config.py`` file::
+For disabling the terms of service requirement. First, edit the ``~/sc_build/sagecell/config.py`` file::
 
-    $ nano ~/sc_build/sage/sagecell/config.py
+    $ nano ~/sc_build/sagecell/config.py
 
 Second, change the line of code from::
 
