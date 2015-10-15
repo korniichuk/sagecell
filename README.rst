@@ -7,7 +7,7 @@ Yep, you can use this `NOT simple installation <https://github.com/sagemath/sage
 
 Portability
 ===========
-The SageMathCell installer tested on **Ubuntu 14.04.2 LTS**, **Ubuntu 15.04** and **Debian 7.8**.
+The SageMathCell installer tested on **Ubuntu Server 14.04 LTS**, **Ubuntu Desktop 14.04 LTS**, **Ubuntu Desktop 15.04** and **Debian 7.8**.
 
 Installation
 ============
