@@ -2,6 +2,7 @@
 
 from argparse import ArgumentParser
 from errno import EACCES
+from multiprocessing import cpu_count
 from os import remove
 from os.path import dirname, exists, expanduser, isdir, isfile, join
 from platform import platform
@@ -268,8 +269,12 @@ def install():
         local("echo \"Y\" | sudo apt-get install gcc m4 make perl tar")
     elif distro == "debian":
         local("su -c \"echo \"Y\" | apt-get install gcc m4 make perl tar\"")
-    # Build Sage
-    local("cd %s; make" % sage_path)
+    # Find out the number of CPUs in the system and build Sage
+    try:
+        cpu_quantity = cpu_count()
+    except NotImplementedError:
+        cpu_quantity = 1
+    local("cd %s; make -j%s" % (sage_path, str(cpu_quantity)))
     # Install threejs
     if distro == "ubuntu":
         local("cd %s; sudo ./sage -i threejs" % sage_path)
