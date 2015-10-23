@@ -160,7 +160,7 @@ With the SageMathCell installer
 
 .. note:: The default port number is 8888.
 
-For changing a port number. First, edit the ``/usr/local/bin/sagecellscript`` file::
+For changing a port number. First, open the ``/usr/local/bin/sagecellscript`` file::
 
     $ sudo nano /usr/local/bin/sagecellscript
 
@@ -229,7 +229,7 @@ or::
 
     $ su -c "chmod 755 /usr/local/sbin/sagecellscript"
 
-Fourth, edit the ``/etc/rc.local`` file::
+Fourth, open the ``/etc/rc.local`` file::
 
     $ sudo nano /etc/rc.local
 
@@ -269,7 +269,7 @@ Example::
 
 Disable the terms of service requirement
 ----------------------------------------
-For disabling the terms of service requirement. First, edit the ``~/sc_build/sagecell/config.py`` file::
+For disabling the terms of service requirement. First, open the ``~/sc_build/sagecell/config.py`` file::
 
     $ nano ~/sc_build/sagecell/config.py
 

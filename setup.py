@@ -23,7 +23,7 @@ setup(
         "Topic :: System :: Systems Administration",
         "Topic :: Utilities"
     ],
-    description = ("The SageMathCell installer"),
+    description = "The SageMathCell installer",
     download_url = "https://github.com/korniichuk/sagecell/archive/0.3.zip",
     entry_points = {
         'console_scripts': 'sagecell = sagecell.sagecell:main'
@@ -41,6 +41,6 @@ setup(
     platforms = ["Linux"],
     scripts=['scripts/sagecellscript'],
     url = "https://github.com/korniichuk/sagecell",
-    version = "0.3rc3",
+    version = "0.3rc4",
     zip_safe = True
 )
