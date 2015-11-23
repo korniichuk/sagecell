@@ -168,10 +168,13 @@ def install():
             exit(0)
     # Check Internet access
     print(messages["_ask_internet"])
-    answer = raw_input()
+    try:
+        answer = raw_input()
+    except EOFError:
+        answer = 'y'
     answer_lower = answer.lower()
-    if ((answer_lower == 'n') or (answer_lower == 'no') or
-            (answer_lower == 'nix')):
+    if ((answer_lower == 'n') or (answer_lower == "no") or
+            (answer_lower == "nix")):
         print(messages["_error_Internet"])
         exit(0)
     # Update the Package Index
@@ -242,8 +245,8 @@ def install():
             print(messages["_ask_replace"] % ("sc_build", "dir"))
             answer = raw_input()
             answer_lower = answer.lower()
-            if ((answer_lower == 'y') or (answer_lower == 'yes') or
-                    (answer_lower == 'yep')):
+            if ((answer_lower == 'y') or (answer_lower == "yes") or
+                    (answer_lower == "yep")):
                 local("rm -r %s" % sc_build_path)
             else:
                 print(messages["_error_replace"] % ("sc_build", "dir"))
@@ -252,8 +255,8 @@ def install():
             print(messages["_ask_replace"] % ("sc_build", "file"))
             answer = raw_input()
             answer_lower = answer.lower()
-            if ((answer_lower == 'y') or (answer_lower == 'yes') or
-                    (answer_lower == 'yep')):
+            if ((answer_lower == 'y') or (answer_lower == "yes") or
+                    (answer_lower == "yep")):
                 local("rm %s" % sc_build_path)
             else:
                 print(messages["_error_replace"] % ("sc_build", "file"))
