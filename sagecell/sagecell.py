@@ -88,7 +88,10 @@ def auto():
                 print(messages["_error_Oops"] % strerror(error_code))
                 exit(1)
         # Make rc.local file executable
-        local("chmod u+x %s" % rc_local_abs_path)
+        if distro == "ubuntu":
+            local("sudo chmod u+x %s" % rc_local_abs_path)
+        elif distro == "debian":
+            local("su -c \"chmod u+x %s\"" % rc_local_abs_path)
     try:
         with open(rc_local_abs_path, 'w') as f:
             for line in rc_local_lines:
