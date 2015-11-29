@@ -158,7 +158,10 @@ def install():
     if distro == None:
         print(messages["_unsupported_distro"])
         print(messages["_ask_distro"].format("\n"))
-        answer = raw_input()
+        try:
+            answer = raw_input()
+        except EOFError:
+            answer = '1'
         answer_lower = answer.lower()
         if (answer_lower == '0') or (answer_lower == 'o'):
             exit(0)
