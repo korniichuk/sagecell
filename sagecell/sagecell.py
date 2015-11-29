@@ -249,7 +249,10 @@ def install():
     if exists(sc_build_path):
         if isdir(sc_build_path):
             print(messages["_ask_replace"] % ("sc_build", "dir"))
-            answer = raw_input()
+            try:
+                answer = raw_input()
+            except EOFError:
+                answer = 'y'
             answer_lower = answer.lower()
             if ((answer_lower == 'y') or (answer_lower == "yes") or
                     (answer_lower == "yep")):
@@ -259,7 +262,10 @@ def install():
                 exit(0)
         elif isfile(sc_build_path):
             print(messages["_ask_replace"] % ("sc_build", "file"))
-            answer = raw_input()
+            try:
+                answer = raw_input()
+            except EOFError:
+                answer = 'y'
             answer_lower = answer.lower()
             if ((answer_lower == 'y') or (answer_lower == "yes") or
                     (answer_lower == "yep")):
