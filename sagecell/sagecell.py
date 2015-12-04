@@ -259,7 +259,10 @@ def install():
             answer_lower = answer.lower()
             if ((answer_lower == 'y') or (answer_lower == "yes") or
                     (answer_lower == "yep")):
-                local("rm -r %s" % sc_build_path)
+                if distro == "ubuntu":
+                    local("sudo rm -r %s" % sc_build_path)
+                elif distro == "debian":
+                    local("su -c \"rm -r %s\"" % sc_build_path)
             else:
                 print(messages["_error_replace"] % ("sc_build", "dir"))
                 exit(0)
@@ -272,7 +275,10 @@ def install():
             answer_lower = answer.lower()
             if ((answer_lower == 'y') or (answer_lower == "yes") or
                     (answer_lower == "yep")):
-                local("rm %s" % sc_build_path)
+                if distro == "ubuntu":
+                    local("sudo rm %s" % sc_build_path)
+                elif distro == "debian":
+                    local("su -c \"rm %s\"" % sc_build_path)
             else:
                 print(messages["_error_replace"] % ("sc_build", "file"))
                 exit(0)
