@@ -265,7 +265,8 @@ Replace the ``~/sc_build/sagecell/sqlite.db`` file with a `shortened temporary l
 
 Example::
 
-    $ scp ~/Downloads/sqlite4transfer.db albert@192.168.0.1:~/sc_build/sagecell/sqlite.db
+    $ scp ~/Downloads/sqlite4transfer.db \
+    albert@192.168.0.1:~/sc_build/sagecell/sqlite.db
 
 Disable the terms of service requirement
 ----------------------------------------
